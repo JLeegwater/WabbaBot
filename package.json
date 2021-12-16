@@ -1,0 +1,31 @@
+{
+  "name": "wabbabot",
+  "version": "1.0.0",
+  "description": "This is a going to be a connect 4 bot for discord, but could become many other things too.",
+  "main": "index.js",
+  "dependencies": {
+    "@discordjs/builders": "^0.9.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.25.2",
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JLeegwater/WabbaBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JLeegwater/WabbaBot/issues"
+  },
+  "homepage": "https://github.com/JLeegwater/WabbaBot#readme",
+  "devDependencies": {
+    "eslint": "^8.4.1"
+  }
+}
