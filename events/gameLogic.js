@@ -1,11 +1,3 @@
-String.prototype.toCharArray = function () {
-	return [...this];
-};
-
-Array.prototype.toString = function () {
-	return this.join("");
-};
-
 const winCheck = (messageArray, pos) => {
 	const team = messageArray[pos];
 	let count = 1;
@@ -68,7 +60,7 @@ const winCheck = (messageArray, pos) => {
 };
 
 const move = (interaction) => {
-	const messageArray = interaction.message.content.toCharArray();
+	const messageArray = [...interaction.message.content];
 
 	const player = messageArray[messageArray.length - 1];
 
@@ -86,7 +78,7 @@ const move = (interaction) => {
 	if (winCheck(messageArray, pos)) {
 		messageArray.push(`\nplayer ${player} wins!!`);
 	}
-	const newMessage = messageArray.toString();
+	const newMessage = messageArray.join("");
 
 	return newMessage;
 };
