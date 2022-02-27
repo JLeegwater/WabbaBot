@@ -31,7 +31,7 @@ const winCheck = (messageArray, row, column) => {
 	}
 
 	count = 1;
-	// Diagonal Asending
+	// Diagonal ascending
 	for (
 		let i = 1;
 		i <= 3 && row - i * 8 + i && messageArray[row - i * 8 + i] == team;
@@ -43,12 +43,12 @@ const winCheck = (messageArray, row, column) => {
 		count++;
 	}
 	if (count >= 4) {
-		console.log(`${team} won with Diagonal Asending`);
+		console.log(`${team} won with Diagonal ascending`);
 		return true;
 	}
 
 	count = 1;
-	// Diagonal Desending
+	// Diagonal descending
 	for (let i = 1; i <= 3 && messageArray[row + i * 8 + i] == team; i++) {
 		count++;
 	}
@@ -56,7 +56,7 @@ const winCheck = (messageArray, row, column) => {
 		count++;
 	}
 	if (count >= 4) {
-		console.log(`${team} won with Diagonal Desending`);
+		console.log(`${team} won with Diagonal descending`);
 		return true;
 	}
 
@@ -101,9 +101,9 @@ const move = (interaction) => {
 		}
 	}
 
-	// if (winCheck(messageArray, pos, column)) {
-	// 	messageArray.push(`player ${player} wins!!`);
-	// }
+	if (winCheck(messageArray, pos, column)) {
+		// messageArray.push(`player ${player} wins!!`);
+	}
 
 	const newMessage = messageArray.map((element) => element.join("")).join("\n");
 
