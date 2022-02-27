@@ -1,15 +1,17 @@
-const winCheck = (messageArray, pos) => {
-	const team = messageArray[pos];
+const winCheck = (messageArray, row, column) => {
+	const team = messageArray[row][column];
+	console.log(team);
 	let count = 1;
 
 	// Horizontal
-	for (let i = 1; i <= 3 && messageArray[pos + i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[pos - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row - i] == team; i++) {
 		count++;
 	}
 	if (count >= 4) {
+		console.log(`${team} won with Horizontal`);
 		return true;
 	}
 
@@ -17,14 +19,14 @@ const winCheck = (messageArray, pos) => {
 	// Vertical
 	for (
 		let i = 1;
-		i <= 3 && pos + i * 8 >= 0 && messageArray[pos + i * 8] == team;
+		i <= 3 && row + i * 8 >= 0 && messageArray[row + i * 8] == team;
 		i++
 	) {
-		console.log(pos - i * 8);
 		count++;
 	}
 
 	if (count >= 4) {
+		console.log(`${team} won with Vertical`);
 		return true;
 	}
 
@@ -32,27 +34,29 @@ const winCheck = (messageArray, pos) => {
 	// Diagonal Asending
 	for (
 		let i = 1;
-		i <= 3 && pos - i * 8 + i && messageArray[pos - i * 8 + i] == team;
+		i <= 3 && row - i * 8 + i && messageArray[row - i * 8 + i] == team;
 		i++
 	) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[pos + i * 8 - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row + i * 8 - i] == team; i++) {
 		count++;
 	}
 	if (count >= 4) {
+		console.log(`${team} won with Diagonal Asending`);
 		return true;
 	}
 
+	count = 1;
 	// Diagonal Desending
-	for (let i = 1; i <= 3 && messageArray[pos + i * 8 + i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row + i * 8 + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[pos - i * 8 - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row - i * 8 - i] == team; i++) {
 		count++;
 	}
-	// console.log(count);
 	if (count >= 4) {
+		console.log(`${team} won with Diagonal Desending`);
 		return true;
 	}
 
@@ -60,25 +64,48 @@ const winCheck = (messageArray, pos) => {
 };
 
 const move = (interaction) => {
-	const messageArray = [...interaction.message.content];
+	console.log(interaction);
+	const messageArray = [...interaction.message.content.split("\n")].map(
+		(element) => (element = [...element])
+	);
 
-	const player = messageArray[messageArray.length - 1];
+	const curUser = interaction.user.id;
+	const player = messageArray[7].slice(-1);
+
+	if (messageArray[8][messageArray[8].length - 1] == "=") {
+		// if first player isn't set, add the creator of interaction
+		messageArray[8] = messageArray[8].concat(`<@${curUser}>`);
+	} else if (messageArray[9][messageArray[9].length - 1] == "=") {
+		// if second player isn't set, add the creator of interaction
+		messageArray[9] = messageArray[9].concat(`<@${curUser}>`);
+	} else if (messageArray[10]) {
+		return;
+	}
+
+	if (player == "🔵" && messageArray[8].join("").search(curUser) == -1) {
+		console.log("Not your turn");
+		return;
+	}
+	if (player == "🔴" && messageArray[9].join("").search(curUser) == -1) {
+		console.log("Not your turn");
+		return;
+	}
 
 	let pos = -1;
+	const column = parseInt(interaction.values[0]);
 	for (let row = 5; row >= 0 && pos == -1; row--) {
-		const curPos = row * 8 + parseInt(interaction.values[0]);
-
-		if (messageArray[curPos] == "⚪") {
-			messageArray[curPos] = player;
-			messageArray[messageArray.length - 1] = player == "🔵" ? "🔴" : "🔵";
-			pos = curPos;
+		if (messageArray[row][column] == "⚪") {
+			messageArray[row][column] = player;
+			messageArray[7][6] = player == "🔵" ? "🔴" : "🔵";
+			pos = row;
 		}
 	}
 
-	if (winCheck(messageArray, pos)) {
-		messageArray.push(`\nplayer ${player} wins!!`);
-	}
-	const newMessage = messageArray.join("");
+	// if (winCheck(messageArray, pos, column)) {
+	// 	messageArray.push(`player ${player} wins!!`);
+	// }
+
+	const newMessage = messageArray.map((element) => element.join("")).join("\n");
 
 	return newMessage;
 };

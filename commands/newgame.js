@@ -6,6 +6,7 @@ module.exports = {
 		.setName("newgame")
 		.setDescription("Starts a new game of connect 4!"),
 	async execute(interaction) {
+		// console.log(interaction);
 		const row = new MessageActionRow().addComponents(
 			new MessageSelectMenu()
 				.setCustomId("select")
@@ -50,8 +51,7 @@ module.exports = {
 				])
 		);
 		await interaction.reply({
-			content:
-				"⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣\nTurn: 🔵",
+			content: `⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n⚪⚪⚪⚪⚪⚪⚪\n1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣\nTurn: 🔵\n🔵=\n🔴=`,
 			components: [row],
 		});
 	},
