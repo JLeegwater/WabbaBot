@@ -1,13 +1,12 @@
 const winCheck = (messageArray, row, column) => {
 	const team = messageArray[row][column];
-	console.log(team);
 	let count = 1;
 
 	// Horizontal
-	for (let i = 1; i <= 3 && messageArray[row + i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row][column + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[row - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row][column - i] == team; i++) {
 		count++;
 	}
 	if (count >= 4) {
@@ -19,7 +18,7 @@ const winCheck = (messageArray, row, column) => {
 	// Vertical
 	for (
 		let i = 1;
-		i <= 3 && row + i * 8 >= 0 && messageArray[row + i * 8] == team;
+		i <= 3 && row + i * 8 >= 0 && [row - i][column] == team;
 		i++
 	) {
 		count++;
@@ -32,14 +31,10 @@ const winCheck = (messageArray, row, column) => {
 
 	count = 1;
 	// Diagonal ascending
-	for (
-		let i = 1;
-		i <= 3 && row - i * 8 + i && messageArray[row - i * 8 + i] == team;
-		i++
-	) {
+	for (let i = 1; i <= 3 && messageArray[row - i][column + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[row + i * 8 - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row + i][column - i] == team; i++) {
 		count++;
 	}
 	if (count >= 4) {
@@ -49,10 +44,10 @@ const winCheck = (messageArray, row, column) => {
 
 	count = 1;
 	// Diagonal descending
-	for (let i = 1; i <= 3 && messageArray[row + i * 8 + i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row + i][column + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[row - i * 8 - i] == team; i++) {
+	for (let i = 1; i <= 3 && messageArray[row - i][column - i] == team; i++) {
 		count++;
 	}
 	if (count >= 4) {
@@ -64,7 +59,7 @@ const winCheck = (messageArray, row, column) => {
 };
 
 const move = (interaction) => {
-	console.log(interaction);
+	// console.log(interaction);
 	const messageArray = [...interaction.message.content.split("\n")].map(
 		(element) => (element = [...element])
 	);
@@ -102,9 +97,9 @@ const move = (interaction) => {
 	}
 
 	if (winCheck(messageArray, pos, column)) {
-		// messageArray.push(`player ${player} wins!!`);
+		messageArray.push([`${player} player wins!!`]);
 	}
-
+	// console.log(messageArray);
 	const newMessage = messageArray.map((element) => element.join("")).join("\n");
 
 	return newMessage;
