@@ -18,7 +18,7 @@ const winCheck = (messageArray, row, column) => {
 	// Vertical
 	for (
 		let i = 1;
-		i <= 3 && row + i * 8 >= 0 && [row - i][column] == team;
+		i <= 3 && row + i >= 0 && messageArray[row + i][column] == team;
 		i++
 	) {
 		count++;
@@ -31,7 +31,11 @@ const winCheck = (messageArray, row, column) => {
 
 	count = 1;
 	// Diagonal ascending
-	for (let i = 1; i <= 3 && messageArray[row - i][column + i] == team; i++) {
+	for (
+		let i = 1;
+		i <= 3 && row - i >= 0 && messageArray[row - i][column + i] == team;
+		i++
+	) {
 		count++;
 	}
 	for (let i = 1; i <= 3 && messageArray[row + i][column - i] == team; i++) {
@@ -47,7 +51,11 @@ const winCheck = (messageArray, row, column) => {
 	for (let i = 1; i <= 3 && messageArray[row + i][column + i] == team; i++) {
 		count++;
 	}
-	for (let i = 1; i <= 3 && messageArray[row - i][column - i] == team; i++) {
+	for (
+		let i = 1;
+		i <= 3 && row - i >= 0 && messageArray[row - i][column - i] == team;
+		i++
+	) {
 		count++;
 	}
 	if (count >= 4) {
@@ -95,8 +103,8 @@ const move = (interaction) => {
 			pos = row;
 		}
 	}
-
-	if (winCheck(messageArray, pos, column)) {
+	// console.log(`row: ${pos}\nColumn: ${column}`);
+	if (pos != -1 && winCheck(messageArray, pos, column)) {
 		messageArray.push([`${player} player wins!!`]);
 	}
 	// console.log(messageArray);
