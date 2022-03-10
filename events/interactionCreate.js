@@ -10,7 +10,6 @@ module.exports = {
 
 		if (interaction.isSelectMenu()) {
 			gameLogic.move(interaction);
-			// interaction.update({ content: gameLogic.move(interaction) });
 		}
 	},
 };
