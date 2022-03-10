@@ -82,15 +82,23 @@ const move = (interaction) => {
 		// if second player isn't set, add the creator of interaction
 		messageArray[9] = messageArray[9].concat(`<@${curUser}>`);
 	} else if (messageArray[10]) {
+		console.log("Game is over");
+		interaction.reply({
+			content: "Game is over",
+			ephemeral: true,
+		});
 		return;
 	}
 
-	if (player == "🔵" && messageArray[8].join("").search(curUser) == -1) {
+	if (
+		(player == "🔵" && messageArray[8].join("").search(curUser) == -1) ||
+		(player == "🔴" && messageArray[9].join("").search(curUser) == -1)
+	) {
 		console.log("Not your turn");
-		return;
-	}
-	if (player == "🔴" && messageArray[9].join("").search(curUser) == -1) {
-		console.log("Not your turn");
+		interaction.reply({
+			content: "Not your turn",
+			ephemeral: true,
+		});
 		return;
 	}
 
@@ -109,8 +117,8 @@ const move = (interaction) => {
 	}
 	// console.log(messageArray);
 	const newMessage = messageArray.map((element) => element.join("")).join("\n");
-
-	return newMessage;
+	interaction.update({ content: newMessage });
+	return;
 };
 
 module.exports = {
