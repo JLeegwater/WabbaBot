@@ -9,7 +9,8 @@ module.exports = {
 		);
 
 		if (interaction.isSelectMenu()) {
-			interaction.update({ content: gameLogic.move(interaction) });
+			gameLogic.move(interaction);
+			// interaction.update({ content: gameLogic.move(interaction) });
 		}
 	},
 };
